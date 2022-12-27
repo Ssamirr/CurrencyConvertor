@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import Converter from "./components/Converter";
+import { useContext, useEffect } from "react";
+import { mainContext } from "./context/CurrencyContext";
+
 
 function App() {
+
+  let { setData } = useContext(mainContext)
+
+
+  const Currency = () => {
+    fetch("https://api.freecurrencyapi.com/v1/latest?apikey=eRFp8JVBUuRprAHvbCoYhUV8UP0cHQ8OhYn10wm1")
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        setData(Object.entries(data.data))
+      })
+  }
+
+  useEffect(() => {
+    Currency();
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Converter />
+    </>
   );
 }
 
